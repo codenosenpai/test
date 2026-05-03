@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Installateur et dépanneur climatisation à Arles - Frigelis</title>
+  <meta name="description" content="Frigelis — Dépannage climatisation sous 48h à Arles, Nîmes, Avignon, Salon-de-Provence. Installation, entretien et nettoyage clim. 6 ans d'expérience. Devis gratuit, à partir de 85€.">
+  <link rel="icon" href="assets/img/logo-icon.png" type="image/png">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <style>
+    /* ══════════════════════════════════════════════
+       HERO
+    ══════════════════════════════════════════════ */
+    #hero {
+      min-height:calc(100vh - 112px);
+      background:linear-gradient(150deg, #f0f6ff 0%, #e8f0fe 40%, #f5f9ff 100%);
+      display:grid; grid-template-columns:1fr 480px;
+      align-items:center; gap:4rem;
+      padding:clamp(4rem,8vw,6rem) clamp(1.5rem,5vw,4rem);
+      position:relative; overflow:hidden;
+    }
+    /* decorative blobs */
+    #hero::before {
+      content:''; position:absolute;
+      width:700px; height:700px; border-radius:50%;
+      background:radial-gradient(circle, rgba(37,99,235,.07), transparent 65%);
+      top:-200px; right:-150px; pointer-events:none;
+    }
+    #hero::after {
+      content:''; position:absolute;
+      width:400px; height:400px; border-radius:50%;
+      background:radial-gradient(circle, rgba(56,189,248,.09), transparent 65%);
+      bottom:-100px; left:30%; pointer-events:none;
+    }
+
+    .hero-left { position:relative; z-index:1; }
+    .hero-eyebrow {
+      display:inline-flex; align-items:center; gap:.6rem;
+      background:white; border:1px solid var(--blue-bdr);
+      border-radius:999px; padding:.35rem 1rem;
+      font-size:.72rem; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
+      color:var(--blue); box-shadow:var(--sh-sm); margin-bottom:1.75rem;
+    }
+    .hero-eyebrow .dot { width:7px; height:7px; background:var(--green); border-radius:50%; animation:blink 2s infinite; }
+
+    .hero-h1 {
+      font-size:clamp(3rem,5.5vw,5.2rem);
+      font-weight:900; color:var(--navy);
+      line-height:.95; margin-bottom:1.4rem;
+    }
+    .hero-h1 .line-blue { color:var(--blue); display:block; }
+
+    .hero-lead {
+      font-size:1.05rem; line-height:1.8; color:var(--muted);
+      max-width:460px; margin-bottom:2.5rem;
+    }
+    .hero-actions { display:flex; gap:.75rem; flex-wrap:wrap; margin-bottom:3rem; }
+
+    .hero-trust {
+      display:flex; align-items:center; gap:.85rem;
+      padding-top:2rem; border-top:1px solid rgba(37,99,235,.12);
+    }
+    .trust-avatars { display:flex; }
+    .trust-avatars span {
+      width:34px; height:34px; border-radius:50%; border:2.5px solid white;
+      background:linear-gradient(135deg, var(--navy), var(--blue));
+      display:flex; align-items:center; justify-content:center;
+      font-size:.75rem; font-weight:800; color:white;
+      font-family:'Barlow Condensed',sans-serif;
+      margin-left:-9px;
+    }
+    .trust-avatars span:first-child { margin-left:0; }
+    .trust-text { font-size:.82rem; color:var(--muted); }
+    .trust-text strong { color:var(--navy); }
+
+    /* Hero right — feature cards */
+    .hero-right { position:relative; z-index:1; display:flex; flex-direction:column; gap:.9rem; }
+    .hero-feat-card {
+      background:white; border:1px solid var(--gray-200);
+      border-radius:var(--r-xl); padding:1.4rem 1.6rem;
+      display:flex; align-items:center; gap:1.1rem;
+      box-shadow:var(--sh-md);
+      transition:all .35s var(--ease);
+    }
+    .hero-feat-card:hover { transform:translateX(6px); box-shadow:var(--sh-lg); border-color:var(--blue-bdr); }
+    .hero-feat-card:nth-child(2) { margin-left:1.5rem; }
+    .hero-feat-card:nth-child(3) { margin-left:3rem; }
+    /* GSAP prend le relais — les cartes démarrent invisibles */
+    .hero-feat-card { opacity: 0; }
+    .feat-ico {
+      width:50px; height:50px; border-radius:var(--r-lg); flex-shrink:0;
+      display:flex; align-items:center; justify-content:center; font-size:1.6rem;
+    }
+    .feat-ico.blue  { background:var(--blue-pale); }
+    .feat-ico.light { background:#f0f9ff; }
+    .feat-ico.mint  { background:#ecfdf5; }
+    .feat-body-title { font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:1.1rem; color:var(--navy); }
+    .feat-body-sub { font-size:.78rem; color:var(--muted); margin-top:.15rem; }
+    .feat-arrow { margin-left:auto; color:var(--blue); font-size:1.1rem; opacity:.4; }
+
+    /* ══════════════════════════════════════════════
+       STATS RIBBON
+    ══════════════════════════════════════════════ */
+    #stats {
+      background:var(--navy);
+      padding:2.5rem clamp(1.5rem,5vw,4rem);
+    }
+    .stats-inner {
+      max-width:1200px; margin:0 auto;
+      display:grid; grid-template-columns:repeat(4,1fr);
+      gap:1rem; text-align:center;
+    }
+    .stat-item { padding:1.25rem .5rem; }
+    .stat-n {
+      font-family:'Barlow Condensed',sans-serif;
+      font-size:3.4rem; font-weight:900; color:white; line-height:1;
+    }
+    .stat-n sup { color:var(--cyan); font-size:1.6rem; }
+    .stat-l { color:rgba(255,255,255,.45); font-size:.73rem; letter-spacing:.12em; text-transform:uppercase; margin-top:.3rem; }
+
+    /* ══════════════════════════════════════════════
+       SERVICES
+    ══════════════════════════════════════════════ */
+    .svc-grid {
+      display:grid; grid-template-columns:repeat(auto-fill, minmax(270px,1fr));
+      gap:1.25rem;
+    }
+    .svc-card {
+      background:white; border:1px solid var(--gray-200);
+      border-radius:var(--r-xl); padding:2rem;
+      box-shadow:var(--sh-sm); position:relative; overflow:hidden;
+      transition:all .4s var(--ease);
+    }
+    .svc-card:hover { transform:translateY(-6px); box-shadow:var(--sh-xl); border-color:var(--blue-bdr); }
+    .svc-card.coming-soon { opacity:.65; }
+    .svc-soon-badge {
+      position:absolute; top:1rem; right:1rem;
+      background:var(--amber); color:white;
+      font-family:'Barlow Condensed',sans-serif; font-weight:800;
+      font-size:.68rem; letter-spacing:.1em; text-transform:uppercase;
+      padding:.2rem .65rem; border-radius:999px;
+    }
+    .svc-ico-wrap {
+      width:52px; height:52px; border-radius:var(--r-lg);
+      background:var(--blue-pale);
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.7rem; margin-bottom:1.25rem;
+    }
+    .svc-name { font-size:1.35rem; font-weight:800; color:var(--navy); margin-bottom:.5rem; }
+    .svc-desc { color:var(--muted); font-size:.875rem; line-height:1.65; margin-bottom:1.1rem; }
+    .svc-tags { display:flex; flex-wrap:wrap; gap:.35rem; margin-bottom:1.25rem; }
+    .svc-tag {
+      font-size:.65rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+      color:var(--blue); border:1px solid var(--blue-bdr);
+      padding:.2rem .6rem; border-radius:999px;
+    }
+    .svc-link {
+      display:inline-flex; align-items:center; gap:.35rem;
+      font-size:.85rem; font-weight:600; color:var(--navy);
+      border:1.5px solid var(--gray-200); border-radius:var(--r-sm);
+      padding:.45rem 1rem; transition:all .2s;
+    }
+    .svc-link:hover { border-color:var(--blue); color:var(--blue); background:var(--blue-pale); }
+
+    /* ══════════════════════════════════════════════
+       PROCESS
+    ══════════════════════════════════════════════ */
+    #process { background:var(--navy); }
+    .process-grid {
+      display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem;
+      margin-top:3.5rem;
+    }
+    .process-step {
+      background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.07);
+      border-radius:var(--r-2xl); padding:2rem 1.75rem;
+      position:relative; transition:background .3s;
+    }
+    .process-step:hover { background:rgba(255,255,255,.07); }
+    .process-step-connector {
+      display:none;
+    }
+    .step-num {
+      font-family:'Barlow Condensed',sans-serif; font-size:5rem; font-weight:900;
+      color:rgba(37,99,235,.25); line-height:1; margin-bottom:.75rem;
+      display:block;
+    }
+    .step-ico { font-size:2rem; margin-bottom:1rem; display:block; }
+    .step-title { font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:1.3rem; color:white; margin-bottom:.5rem; }
+    .step-desc { color:rgba(255,255,255,.45); font-size:.875rem; line-height:1.7; }
+
+    /* ══════════════════════════════════════════════
+       AVIS GOOGLE
+    ══════════════════════════════════════════════ */
+    #avis { background:var(--gray-50); }
+    .avis-top {
+      display:flex; align-items:flex-end; justify-content:space-between;
+      flex-wrap:wrap; gap:2rem; margin-bottom:3rem;
+    }
+    .avis-score { display:flex; align-items:center; gap:1.25rem; }
+    .avis-num {
+      font-family:'Barlow Condensed',sans-serif;
+      font-size:5rem; font-weight:900; color:var(--navy); line-height:1;
+    }
+    .avis-stars-row { color:var(--amber); font-size:1.5rem; letter-spacing:.05em; }
+    .avis-count { color:var(--muted); font-size:.85rem; margin-top:.25rem; }
+    .avis-google-logo {
+      display:flex; align-items:center; gap:.5rem;
+      font-size:.78rem; font-weight:600; color:var(--muted);
+    }
+    .avis-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem; margin-bottom:2.5rem; }
+    .avis-card {
+      background:white; border:1px solid var(--gray-200);
+      border-radius:var(--r-xl); padding:1.75rem;
+      box-shadow:var(--sh-sm); transition:all .35s var(--ease);
+      display:flex; flex-direction:column;
+    }
+    .avis-card:hover { transform:translateY(-4px); box-shadow:var(--sh-lg); border-color:var(--blue-bdr); }
+    .avis-card-stars { color:var(--amber); font-size:1.05rem; letter-spacing:.05em; margin-bottom:1rem; }
+    .avis-card-text {
+      color:var(--gray-700); font-size:.9rem; line-height:1.75;
+      margin-bottom:1.5rem; flex:1; font-style:italic;
+    }
+    .avis-card-text::before { content:'"'; color:var(--blue); font-size:1.8rem; font-family:'Barlow Condensed',sans-serif; line-height:0; vertical-align:-.35rem; margin-right:.15rem; }
+    .avis-card-footer { display:flex; align-items:center; justify-content:space-between; }
+    .avis-author { font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:1.05rem; color:var(--navy); }
+    .avis-meta { font-size:.75rem; color:var(--gray-400); margin-top:.1rem; }
+    .avis-cta-row { text-align:center; }
+
+    /* ══════════════════════════════════════════════
+       ZONE D'INTERVENTION
+    ══════════════════════════════════════════════ */
+    #zone { background:linear-gradient(160deg, var(--navy) 0%, #162f50 60%, #1a3d6e 100%); }
+    .zone-inner { display:grid; grid-template-columns:1fr 1.4fr; gap:5rem; align-items:center; }
+    .zone-left {}
+    .zone-map-wrap {
+      background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1);
+      border-radius:var(--r-2xl); padding:2.5rem;
+      min-height:340px; display:flex; flex-direction:column;
+      align-items:center; justify-content:center; gap:1.5rem;
+    }
+    .zone-cities {
+      display:flex; flex-wrap:wrap; gap:.6rem; justify-content:center;
+    }
+    .zone-city {
+      background:rgba(56,189,248,.12); border:1px solid rgba(56,189,248,.25);
+      color:var(--cyan); font-family:'Barlow Condensed',sans-serif;
+      font-weight:700; font-size:.9rem; letter-spacing:.06em;
+      padding:.35rem .85rem; border-radius:999px;
+      transition:all .2s;
+    }
+    .zone-city.main { background:var(--blue); border-color:var(--blue); color:white; box-shadow:var(--sh-blue); }
+    .zone-city:hover { background:rgba(56,189,248,.22); }
+    .zone-check-input {
+      display:flex; gap:.75rem; align-items:center; width:100%; max-width:360px;
+    }
+    .zone-check-input input {
+      flex:1; background:rgba(255,255,255,.08); border:1.5px solid rgba(255,255,255,.15);
+      border-radius:var(--r-md); color:white; font-family:'Inter',sans-serif;
+      font-size:.9rem; padding:.65rem 1rem; outline:none;
+      transition:border-color .2s;
+    }
+    .zone-check-input input::placeholder { color:rgba(255,255,255,.35); }
+    .zone-check-input input:focus { border-color:var(--cyan); }
+    .zone-check-btn {
+      background:var(--cyan); color:var(--navy); border:none;
+      border-radius:var(--r-md); padding:.65rem 1.25rem;
+      font-family:'Barlow Condensed',sans-serif; font-weight:800;
+      font-size:.9rem; letter-spacing:.06em; white-space:nowrap;
+      transition:all .25s; cursor:pointer;
+    }
+    .zone-check-btn:hover { background:white; transform:translateY(-1px); }
+    #zone-result { font-size:.875rem; font-weight:500; min-height:1.4rem; }
+
+    /* ══════════════════════════════════════════════
+       CONTACT
+    ══════════════════════════════════════════════ */
+    #contact-section { background:var(--gray-50); }
+    .contact-layout { display:grid; grid-template-columns:1fr 1.45fr; gap:5rem; align-items:start; }
+    .contact-kv { display:flex; align-items:center; gap:.85rem; color:var(--muted); font-size:.95rem; margin-bottom:.9rem; }
+    .contact-kv .ico { font-size:1.1rem; color:var(--blue); width:22px; text-align:center; }
+    .contact-urgence {
+      background:var(--navy); border-radius:var(--r-xl);
+      padding:1.5rem; display:flex; gap:1rem; align-items:center;
+      margin-top:2rem;
+    }
+    .contact-urgence-ico { font-size:2rem; }
+    .contact-urgence-title { font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:1.2rem; color:white; }
+    .contact-urgence-sub { color:rgba(255,255,255,.5); font-size:.82rem; margin-top:.15rem; }
+    .contact-form-card {
+      background:white; border:1px solid var(--gray-200);
+      border-radius:var(--r-2xl); padding:2.5rem;
+      box-shadow:var(--sh-md);
+    }
+    .form-grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+    .form-success {
+      display:none; align-items:center; gap:.75rem;
+      background:#ecfdf5; border:1px solid #a7f3d0;
+      border-radius:var(--r-md); padding:1rem 1.25rem;
+      color:var(--green); font-weight:500; margin-top:1rem; font-size:.9rem;
+    }
+
+    /* ══════════════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════════════ */
+    @media(max-width:1024px) {
+      #hero { grid-template-columns:1fr; min-height:auto; padding-top:3rem; }
+      .hero-right { display:none; }
+      .stats-inner { grid-template-columns:repeat(2,1fr); }
+      .process-grid { grid-template-columns:1fr 1fr; }
+      .avis-grid { grid-template-columns:1fr 1fr; }
+      .zone-inner { grid-template-columns:1fr; gap:3rem; }
+      .contact-layout { grid-template-columns:1fr; gap:3rem; }
+      .form-grid-2 { grid-template-columns:1fr; }
+    }
+    @media(max-width:640px) {
+      .svc-grid { grid-template-columns:1fr; }
+      .avis-grid { grid-template-columns:1fr; }
+      .process-grid { grid-template-columns:1fr; }
+      .stats-inner { grid-template-columns:repeat(2,1fr); }
+      .avis-top { flex-direction:column; align-items:flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <span>⚡ Dépannage urgent ? Intervention sous 48h &mdash; <a href="tel:+33600000000">Appelez maintenant</a></span>
+  <div class="topbar-right">
+    <span>📍 Arles · 1h autour</span>
+    <span>🕐 Lun–Sam 8h–18h</span>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <a href="index.html" class="nav-brand">
+    <img src="assets/img/logo-horizontal.png" alt="Frigelis" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <div style="display:none;align-items:center;gap:8px">
+      <div style="width:34px;height:34px;background:linear-gradient(135deg,#0f2744,#2563eb);border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-size:1rem">❄</div>
+      <div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.2rem;color:#0f2744;letter-spacing:.08em">FRIGELIS</div>
+        <div style="font-size:.6rem;color:#64748b;letter-spacing:.1em;text-transform:uppercase">Dépannage & Maintenance</div>
+      </div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#avis">Avis</a></li>
+    <li><a href="pages/faq.html">FAQ</a></li>
+    <li><a href="#contact-section">Contact</a></li>
+    <li><a href="#contact-section" class="nav-cta">Devis gratuit</a></li>
+  </ul>
+  <button class="hamburger"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">
+      <span class="dot"></span>
+      Frigoriste certifié · Arles &amp; PACA · 6 ans d'expérience
+    </div>
+    <h1 class="hero-h1">
+      Dépannage &amp;<br>
+      <span class="line-blue">Installation</span><br>
+      Climatisation
+    </h1>
+    <h2 style="font-size:1rem;font-weight:500;color:var(--muted);margin-bottom:1.4rem;font-family:'Inter',sans-serif;letter-spacing:0">Entretien et nettoyage de clim sous 48h — Bouches-du-Rhône &amp; Gard</h2>
+    <p class="hero-lead">
+      Panne, installation neuve ou entretien annuel — j'interviens rapidement à Arles, Nîmes, Avignon et Salon-de-Provence. Expert Daikin, Mitsubishi, Atlantic. Tarifs clairs, devis gratuit.
+    </p>
+    <div style="display:inline-flex;align-items:center;gap:.55rem;background:#ecfdf5;border:1.5px solid #a7f3d0;border-radius:999px;padding:.35rem 1rem;margin-bottom:1.1rem">
+      <span style="width:8px;height:8px;background:#10b981;border-radius:50%;display:inline-block;box-shadow:0 0 0 3px rgba(16,185,129,.2)"></span>
+      <span style="font-size:.8rem;font-weight:700;color:#065f46;letter-spacing:.02em">📍 Prochaine disponibilité à Arles : <strong>Demain</strong></span>
+    </div>
+    <div class="hero-actions">
+      <a href="#contact-section" class="btn btn-primary" style="font-size:1.05rem">Devis gratuit →</a>
+      <a href="tel:+33600000000" class="btn btn-outline" style="font-size:1.05rem">📞 06 00 00 00 00</a>
+    </div>
+    <p style="font-size:.75rem;color:var(--muted);margin-top:-.75rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:.4rem;flex-wrap:wrap">
+      <span style="color:var(--green)">✓</span> Confirmation immédiate par e-mail &nbsp;·&nbsp; <span style="color:var(--green)">✓</span> Rappel automatique 24h avant l'intervention
+    </p>
+    <div class="hero-trust">
+      <div class="trust-avatars">
+        <span>M</span><span>J</span><span>S</span><span>+</span>
+      </div>
+      <div class="trust-text">
+        <strong>+200 clients</strong> satisfaits en PACA<br>
+        <span style="font-size:.75rem">⭐⭐⭐⭐⭐ 4.7/5 · Intervention garantie sous 48h</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-feat-card" data-hero-card>
+      <div class="feat-ico blue">❄️</div>
+      <div class="feat-body">
+        <div class="feat-body-title">Dépannage Clim</div>
+        <div class="feat-body-sub">Sous 48h · Toutes marques</div>
+      </div>
+      <span class="feat-arrow">→</span>
+    </div>
+    <div class="hero-feat-card" data-hero-card>
+      <div class="feat-ico" style="background:#ecfdf5">🔧</div>
+      <div class="feat-body">
+        <div class="feat-body-title">Entretien & Nettoyage</div>
+        <div class="feat-body-sub">Forfait dès 85€</div>
+      </div>
+      <span class="feat-arrow">→</span>
+    </div>
+    <div class="hero-feat-card" data-hero-card>
+      <div class="feat-ico mint">🏗️</div>
+      <div class="feat-body">
+        <div class="feat-body-title">Installation Clim</div>
+        <div class="feat-body-sub">Mono/Multi-split · Gainable</div>
+      </div>
+      <span class="feat-arrow">→</span>
+    </div>
+    <div class="hero-feat-card" data-hero-card>
+      <div class="feat-ico" style="background:#fff7ed">📅</div>
+      <div class="feat-body">
+        <div class="feat-body-title">RDV en ligne</div>
+        <div class="feat-body-sub">Calendly · Créneau en 2 clics</div>
+      </div>
+      <span class="feat-arrow">→</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══ STATS ══ -->
+<section id="stats">
+  <div class="stats-inner">
+    <div class="stat-item" data-fade>
+      <div class="stat-n"><span data-counter data-target="6">0</span><sup>+</sup></div>
+      <div class="stat-l">Années d'expérience</div>
+    </div>
+    <div class="stat-item" data-fade data-delay="80">
+      <div class="stat-n"><span data-counter data-target="200">0</span><sup>+</sup></div>
+      <div class="stat-l">Interventions réalisées</div>
+    </div>
+    <div class="stat-item" data-fade data-delay="160">
+      <div class="stat-n"><span data-counter data-target="98">0</span><sup>%</sup></div>
+      <div class="stat-l">Clients satisfaits</div>
+    </div>
+    <div class="stat-item" data-fade data-delay="240">
+      <div class="stat-n"><span data-counter data-target="48">0</span><sup>h</sup></div>
+      <div class="stat-l">Délai d'intervention</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ POINTS FORTS ══ -->
+<section style="background:white;padding:clamp(3rem,5vw,4rem) clamp(1.5rem,5vw,4rem);border-bottom:1px solid var(--gray-100)">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2rem" data-fade>
+
+      <div style="display:flex;gap:1.1rem;align-items:flex-start">
+        <div style="width:48px;height:48px;border-radius:var(--r-lg);background:#fff7ed;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0">⚡</div>
+        <div>
+          <h3 style="font-size:1.1rem;font-weight:800;color:var(--navy);margin-bottom:.3rem">Réactivité 48h</h3>
+          <p style="font-size:.875rem;color:var(--muted);line-height:1.65">Intervention garantie sous 48h sur Arles et ses environs. Parce qu'une panne de clim en été, ça n'attend pas.</p>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:1.1rem;align-items:flex-start">
+        <div style="width:48px;height:48px;border-radius:var(--r-lg);background:var(--blue-pale);display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0">🎓</div>
+        <div>
+          <h3 style="font-size:1.1rem;font-weight:800;color:var(--navy);margin-bottom:.3rem">6 ans d'expertise</h3>
+          <p style="font-size:.875rem;color:var(--muted);line-height:1.65">Frigoriste certifié, expert Daikin, Mitsubishi et Atlantic. Installation, maintenance et nettoyage aux normes.</p>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:1.1rem;align-items:flex-start">
+        <div style="width:48px;height:48px;border-radius:var(--r-lg);background:#ecfdf5;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0">💶</div>
+        <div>
+          <h3 style="font-size:1.1rem;font-weight:800;color:var(--navy);margin-bottom:.3rem">Tarifs transparents</h3>
+          <p style="font-size:.875rem;color:var(--muted);line-height:1.65">Devis gratuit, pas de mauvaise surprise. Forfait entretien complet <strong>à partir de 85€</strong> — nettoyage unité int./ext. + vérif. fluide.</p>
+        </div>
+      </div>
+
+    </div>
+    <style>@media(max-width:768px){#points-forts-grid{grid-template-columns:1fr!important}}</style>
+  </div>
+</section>
+
+<!-- ══ SERVICES ══ -->
+<section id="services" class="section section-alt">
+  <div class="container">
+    <div class="sec-header" data-fade>
+      <div class="sec-tag">// Nos interventions</div>
+      <h2 class="sec-h">Ce qu'on <span style="color:var(--blue)">répare &amp; installe</span></h2>
+      <p class="sec-sub">Dépannage réactif, installation soignée et entretien complet — pour les particuliers et les professionnels à Arles et dans toute la PACA.</p>
+    </div>
+    <div class="svc-grid" id="svc-grid">
+      <!-- skeleton -->
+      <div class="skel" style="height:260px"></div>
+      <div class="skel" style="height:260px"></div>
+      <div class="skel" style="height:260px"></div>
+      <div class="skel" style="height:260px"></div>
+    </div>
+    <div style="text-align:center;margin-top:2.5rem" data-fade>
+      <a href="pages/services.html" class="btn btn-primary">Voir tous les services →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SYMPTÔMES ══ -->
+<section id="symptomes" style="background:var(--gray-50);padding:clamp(4rem,7vw,5.5rem) clamp(1.5rem,5vw,4rem)">
+  <div class="container">
+    <div class="sec-header" data-fade style="text-align:center;margin-bottom:2.5rem">
+      <div class="sec-tag" style="justify-content:center">// Dépannage rapide</div>
+      <h2 class="sec-h">Votre clim fait <span style="color:var(--blue)">quoi ?</span></h2>
+      <p class="sec-sub">Choisissez votre symptôme — j'ai déjà résolu ce problème des dizaines de fois.</p>
+    </div>
+    <div id="symptom-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;max-width:780px;margin:0 auto" data-fade>
+
+      <div class="symptom-card" onclick="location.href='https://calendly.com/frigelis-clim/entretien-annuel-climatisation'" style="background:white;border:2px solid var(--gray-200);border-radius:var(--r-xl);padding:1.75rem 1.5rem;cursor:pointer;transition:all .3s var(--ease);display:flex;align-items:center;gap:1.1rem">
+        <div style="font-size:2.2rem;flex-shrink:0">❄️</div>
+        <div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.1rem;color:var(--navy);margin-bottom:.2rem">Elle ne fait plus de froid</div>
+          <div style="font-size:.8rem;color:var(--muted)">Gaz, compresseur, thermostat…</div>
+        </div>
+        <span style="margin-left:auto;background:var(--blue);color:white;border-radius:var(--r-md);padding:.4rem .9rem;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.8rem;white-space:nowrap;flex-shrink:0">Diagnostic →</span>
+      </div>
+
+      <div class="symptom-card" onclick="location.href='https://calendly.com/frigelis-clim/entretien-annuel-climatisation'" style="background:white;border:2px solid var(--gray-200);border-radius:var(--r-xl);padding:1.75rem 1.5rem;cursor:pointer;transition:all .3s var(--ease);display:flex;align-items:center;gap:1.1rem">
+        <div style="font-size:2.2rem;flex-shrink:0">💧</div>
+        <div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.1rem;color:var(--navy);margin-bottom:.2rem">Elle fuit de l'eau à l'intérieur</div>
+          <div style="font-size:.8rem;color:var(--muted)">Bac de condensats, drain bouché…</div>
+        </div>
+        <span style="margin-left:auto;background:var(--blue);color:white;border-radius:var(--r-md);padding:.4rem .9rem;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.8rem;white-space:nowrap;flex-shrink:0">Diagnostic →</span>
+      </div>
+
+      <div class="symptom-card" onclick="location.href='https://calendly.com/frigelis-clim/entretien-annuel-climatisation'" style="background:white;border:2px solid var(--gray-200);border-radius:var(--r-xl);padding:1.75rem 1.5rem;cursor:pointer;transition:all .3s var(--ease);display:flex;align-items:center;gap:1.1rem">
+        <div style="font-size:2.2rem;flex-shrink:0">🔊</div>
+        <div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.1rem;color:var(--navy);margin-bottom:.2rem">Elle fait un bruit de tracteur</div>
+          <div style="font-size:.8rem;color:var(--muted)">Ventilateur, corps étranger, vibration…</div>
+        </div>
+        <span style="margin-left:auto;background:var(--blue);color:white;border-radius:var(--r-md);padding:.4rem .9rem;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.8rem;white-space:nowrap;flex-shrink:0">Diagnostic →</span>
+      </div>
+
+      <div class="symptom-card" onclick="location.href='https://calendly.com/frigelis-clim/entretien-annuel-climatisation'" style="background:white;border:2px solid var(--gray-200);border-radius:var(--r-xl);padding:1.75rem 1.5rem;cursor:pointer;transition:all .3s var(--ease);display:flex;align-items:center;gap:1.1rem">
+        <div style="font-size:2.2rem;flex-shrink:0">🤢</div>
+        <div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.1rem;color:var(--navy);margin-bottom:.2rem">Elle sent mauvais</div>
+          <div style="font-size:.8rem;color:var(--muted)">Moisissures, bactéries, filtres saturés…</div>
+        </div>
+        <span style="margin-left:auto;background:var(--blue);color:white;border-radius:var(--r-md);padding:.4rem .9rem;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.8rem;white-space:nowrap;flex-shrink:0">Diagnostic →</span>
+      </div>
+
+      <div class="symptom-card" onclick="location.href='https://calendly.com/frigelis-clim/entretien-annuel-climatisation'" style="background:white;border:2px solid var(--gray-200);border-radius:var(--r-xl);padding:1.75rem 1.5rem;cursor:pointer;transition:all .3s var(--ease);display:flex;align-items:center;gap:1.1rem">
+        <div style="font-size:2.2rem;flex-shrink:0">⚡</div>
+        <div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.1rem;color:var(--navy);margin-bottom:.2rem">Elle s'arrête toute seule</div>
+          <div style="font-size:.8rem;color:var(--muted)">Sécurité, code erreur, surchauffe…</div>
+        </div>
+        <span style="margin-left:auto;background:var(--blue);color:white;border-radius:var(--r-md);padding:.4rem .9rem;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.8rem;white-space:nowrap;flex-shrink:0">Diagnostic →</span>
+      </div>
+
+      <div class="symptom-card" onclick="location.href='https://calendly.com/frigelis-clim/entretien-annuel-climatisation'" style="background:white;border:2px solid var(--gray-200);border-radius:var(--r-xl);padding:1.75rem 1.5rem;cursor:pointer;transition:all .3s var(--ease);display:flex;align-items:center;gap:1.1rem">
+        <div style="font-size:2.2rem;flex-shrink:0">📱</div>
+        <div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.1rem;color:var(--navy);margin-bottom:.2rem">Code erreur sur l'écran</div>
+          <div style="font-size:.8rem;color:var(--muted)">E1, F3, H6… je décode pour vous</div>
+        </div>
+        <span style="margin-left:auto;background:var(--blue);color:white;border-radius:var(--r-md);padding:.4rem .9rem;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.8rem;white-space:nowrap;flex-shrink:0">Diagnostic →</span>
+      </div>
+
+    </div>
+    <p style="text-align:center;font-size:.8rem;color:var(--muted);margin-top:1.5rem" data-fade>Diagnostic gratuit sur place · Intervention sous 48h · Toutes marques</p>
+  </div>
+</section>
+<style>
+  .symptom-card:hover { border-color:var(--blue) !important; transform:translateY(-3px); box-shadow:var(--sh-lg); }
+  @media(max-width:640px){ #symptom-grid { grid-template-columns:1fr !important; } }
+</style>
+
+<!-- ══ AVANT / APRÈS ══ -->
+<section style="background:var(--navy);padding:clamp(4rem,7vw,5.5rem) clamp(1.5rem,5vw,4rem)">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center" data-fade>
+
+      <div>
+        <div class="sec-tag sec-tag-light">// Hygiène & Qualité de l'air</div>
+        <h2 class="sec-h" style="color:white;margin-bottom:1rem">Respirer un air sain<br><span style="color:var(--cyan)">dès aujourd'hui</span></h2>
+        <p style="color:rgba(255,255,255,.6);font-size:.95rem;line-height:1.8;margin-bottom:1.75rem">
+          Une climatisation non entretenue accumule moisissures, bactéries et acariens dans ses filtres. Résultat : l'air que vous respirez est plus pollué que l'air extérieur.
+        </p>
+
+        <!-- Compteur économies -->
+        <div style="background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.25);border-radius:var(--r-xl);padding:1.25rem 1.5rem;margin-bottom:1.75rem">
+          <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:.5rem">
+            <span style="font-size:1.4rem">💡</span>
+            <span style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.05rem;color:var(--cyan)">Le saviez-vous ?</span>
+          </div>
+          <p style="color:rgba(255,255,255,.75);font-size:.875rem;line-height:1.7;margin:0">
+            Une clim encrassée consomme jusqu'à <strong style="color:white">30% d'électricité en plus</strong>. Un entretien à 85€ se rembourse souvent dès la première facture EDF.
+          </p>
+        </div>
+
+        <!-- Badge local -->
+        <div style="display:inline-flex;align-items:center;gap:.75rem;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:var(--r-xl);padding:1rem 1.4rem;margin-bottom:1.75rem">
+          <span style="font-size:1.5rem">🏠</span>
+          <div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1rem;color:white;letter-spacing:.04em">Artisan Arlésien — 13200</div>
+            <div style="font-size:.75rem;color:rgba(255,255,255,.45);margin-top:.1rem">Intervention de proximité · Pas de plateforme nationale</div>
+          </div>
+        </div>
+
+        <a href="https://calendly.com/frigelis-clim/maintenance-entretien-forfait" target="_blank" rel="noopener" class="btn btn-white">📅 Réserver mon nettoyage complet →</a>
+        <p style="font-size:.72rem;color:rgba(255,255,255,.35);margin-top:.6rem">✓ Confirmation immédiate &nbsp;·&nbsp; ✓ Dès 85€ tout compris</p>
+      </div>
+
+      <!-- Avant / Après visuel -->
+      <div style="position:relative" data-fade data-delay="100">
+        <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-2xl);overflow:hidden">
+          <!-- AVANT -->
+          <div style="padding:1.5rem 1.5rem .75rem">
+            <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:1rem">
+              <span style="background:#ef4444;color:white;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:.75rem;letter-spacing:.1em;padding:.2rem .65rem;border-radius:999px">AVANT</span>
+              <span style="font-size:.8rem;color:rgba(255,255,255,.4)">Filtres non entretenus depuis 2 ans</span>
+            </div>
+            <div style="background:#1a1a2e;border-radius:var(--r-lg);height:160px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.08);position:relative;overflow:hidden">
+              <!-- Simulation visuelle clim encrassée -->
+              <div style="position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(139,69,19,.15) 0px,rgba(139,69,19,.15) 3px,transparent 3px,transparent 12px);"></div>
+              <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(50,30,10,.6),rgba(80,40,10,.8));"></div>
+              <div style="position:relative;text-align:center">
+                <div style="font-size:2.5rem;margin-bottom:.4rem;filter:grayscale(.5)">🦠</div>
+                <div style="font-size:.75rem;color:rgba(255,180,100,.8);font-weight:600">Moisissures · Bactéries · Acariens</div>
+                <div style="font-size:.65rem;color:rgba(255,255,255,.3);margin-top:.2rem">+30% de consommation électrique</div>
+              </div>
+            </div>
+          </div>
+          <!-- Flèche -->
+          <div style="text-align:center;padding:.25rem 0;font-size:1.4rem">↓</div>
+          <!-- APRÈS -->
+          <div style="padding:.75rem 1.5rem 1.5rem">
+            <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:1rem">
+              <span style="background:#10b981;color:white;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:.75rem;letter-spacing:.1em;padding:.2rem .65rem;border-radius:999px">APRÈS</span>
+              <span style="font-size:.8rem;color:rgba(255,255,255,.4)">Nettoyage haute pression Frigelis</span>
+            </div>
+            <div style="background:#0a1628;border-radius:var(--r-lg);height:160px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(56,189,248,.2);position:relative;overflow:hidden">
+              <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(56,189,248,.08),transparent 70%);"></div>
+              <div style="position:relative;text-align:center">
+                <div style="font-size:2.5rem;margin-bottom:.4rem">✨</div>
+                <div style="font-size:.75rem;color:rgba(56,189,248,.9);font-weight:600">Air sain · Éco-efficace · Désinfecté</div>
+                <div style="font-size:.65rem;color:rgba(255,255,255,.35);margin-top:.2rem">Consommation optimisée — jusqu'à -30%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Badge prix -->
+        <div style="position:absolute;top:-14px;right:-14px;background:var(--blue);color:white;border-radius:50%;width:72px;height:72px;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:var(--sh-blue);border:3px solid var(--navy)">
+          <span style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.1rem;line-height:1">85€</span>
+          <span style="font-size:.55rem;opacity:.8;letter-spacing:.05em">DÈS</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<style>@media(max-width:900px){.avant-apres-grid{grid-template-columns:1fr!important}}</style>
+
+<!-- ══ PROCESS ══ -->
+<section id="process" class="section section-dark">
+  <div class="container">
+    <div class="sec-header" data-fade>
+      <div class="sec-tag sec-tag-light">// Comment ça marche</div>
+      <h2 class="sec-h" style="color:white">Votre projet en <span style="color:var(--cyan)">4 étapes</span></h2>
+      <p class="sec-sub sec-sub-light">Un accompagnement simple et transparent de la prise de contact à la réception des travaux.</p>
+    </div>
+    <div class="process-grid">
+      <div class="process-step" data-fade>
+        <span class="step-num">01</span>
+        <span class="step-ico">📋</span>
+        <div class="step-title">Demande de devis</div>
+        <p class="step-desc">Remplissez le formulaire ou appelez directement. Réponse garantie sous 24h, devis toujours gratuit.</p>
+      </div>
+      <div class="process-step" data-fade data-delay="100">
+        <span class="step-num">02</span>
+        <span class="step-ico">🔍</span>
+        <div class="step-title">Diagnostic gratuit</div>
+        <p class="step-desc">Visite technique offerte, étude de votre installation et proposition adaptée à votre besoin et budget.</p>
+      </div>
+      <div class="process-step" data-fade data-delay="200">
+        <span class="step-num">03</span>
+        <span class="step-ico">⚙️</span>
+        <div class="step-title">Intervention soignée</div>
+        <p class="step-desc">Dépannage ou installation réalisés proprement et dans les délais. Matériel de qualité, garantie incluse.</p>
+      </div>
+      <div class="process-step" data-fade data-delay="300">
+        <span class="step-num">04</span>
+        <span class="step-ico">✅</span>
+        <div class="step-title">Suivi &amp; SAV</div>
+        <p class="step-desc">Mise en service, explication complète et disponibilité après intervention pour votre tranquillité d'esprit.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ AVIS GOOGLE ══ -->
+<section id="avis" class="section">
+  <div class="container">
+    <div class="avis-top" data-fade>
+      <div>
+        <div class="sec-tag">// Ce que disent nos clients</div>
+        <h2 class="sec-h">Avis clients</h2>
+        <div class="avis-score">
+          <div class="avis-num">4.7</div>
+          <div>
+            <div class="avis-stars-row">★★★★★</div>
+            <div class="avis-count">sur 3 avis Google vérifiés</div>
+            <div class="avis-google-logo" style="margin-top:.35rem">
+              <svg width="16" height="16" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+              Basé sur Google Reviews
+            </div>
+          </div>
+        </div>
+      </div>
+      <a href="https://g.page/r/VOTRE_ID_GOOGLE/review" target="_blank" rel="noopener" class="btn btn-outline" style="white-space:nowrap">
+        ⭐ Laisser un avis Google
+      </a>
+    </div>
+
+    <div class="avis-grid" id="avis-grid">
+      <!-- filled by JS or static fallback -->
+    </div>
+
+    <div class="avis-cta-row" data-fade>
+      <a href="https://www.google.com/maps/search/Frigelis+Arles" target="_blank" rel="noopener" class="btn btn-outline">
+        Voir tous les avis sur Google →
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ZONE D'INTERVENTION ══ -->
+<section id="zone" class="section section-dark">
+  <div class="container">
+    <div class="zone-inner">
+      <div data-fade>
+        <div class="sec-tag sec-tag-light">// Zone d'intervention</div>
+        <h2 class="sec-h" style="color:white">On vient<br>chez vous</h2>
+        <p class="sec-sub sec-sub-light" style="margin-bottom:1.5rem">
+          Basé à Arles, j'interviens dans un rayon d'1h autour d'Arles — Bouches-du-Rhône, Gard, Vaucluse et Hérault. Déplacement gratuit pour l'établissement du devis.
+        </p>
+        <p style="color:rgba(255,255,255,.5);font-size:.875rem;margin-bottom:1.75rem;line-height:1.7">
+          Besoin d'un dépannage urgent ? Frigelis intervient rapidement à Tarascon, Saint-Martin-de-Crau et Beaucaire.
+        </p>
+        <div style="display:flex;flex-direction:column;gap:.75rem">
+          <div style="display:flex;align-items:center;gap:.75rem;color:rgba(255,255,255,.7);font-size:.9rem"><span style="color:var(--cyan);font-size:1.1rem">✓</span> Déplacement gratuit pour le devis</div>
+          <div style="display:flex;align-items:center;gap:.75rem;color:rgba(255,255,255,.7);font-size:.9rem"><span style="color:var(--cyan);font-size:1.1rem">✓</span> Intervention garantie sous 48h</div>
+          <div style="display:flex;align-items:center;gap:.75rem;color:rgba(255,255,255,.7);font-size:.9rem"><span style="color:var(--cyan);font-size:1.1rem">✓</span> Rayon d'intervention : ~1h autour d'Arles</div>
+          <div style="display:flex;align-items:center;gap:.75rem;color:rgba(255,255,255,.7);font-size:.9rem"><span style="color:var(--cyan);font-size:1.1rem">✓</span> Tarifs transparents — entretien dès 85€</div>
+        </div>
+      </div>
+
+      <div class="zone-map-wrap" data-fade data-delay="100">
+        <div style="font-size:.72rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:.5rem">Villes couvertes</div>
+        <div class="zone-cities">
+          <span class="zone-city main">📍 Arles</span>
+          <span class="zone-city">Nîmes</span>
+          <span class="zone-city">Avignon</span>
+          <span class="zone-city">Salon-de-Provence</span>
+          <span class="zone-city">Tarascon</span>
+          <span class="zone-city">Saint-Martin-de-Crau</span>
+          <span class="zone-city">Beaucaire</span>
+          <span class="zone-city">Istres</span>
+          <span class="zone-city">Martigues</span>
+          <span class="zone-city">Saint-Gilles</span>
+          <span class="zone-city">Lunel</span>
+          <span class="zone-city">Aigues-Mortes</span>
+        </div>
+        <div class="zone-check-input">
+          <input type="text" id="zone-input" placeholder="Votre ville…">
+          <button class="zone-check-btn" onclick="checkZone()">Vérifier</button>
+        </div>
+        <div id="zone-result" style="color:rgba(255,255,255,.6)"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CONTACT ══ -->
+<section id="contact-section" class="section section-alt">
+  <div class="container">
+    <div class="contact-layout">
+      <div data-fade>
+        <div class="sec-tag">// Contact</div>
+        <h2 class="sec-h">Demandez votre<br><span style="color:var(--blue)">Devis Gratuit</span></h2>
+        <p class="sec-sub" style="margin-bottom:2rem">Réponse sous 48h · Déplacement offert · Sans engagement</p>
+
+        <div class="contact-kv"><span class="ico">📞</span><span><a href="tel:+33600000000" style="color:var(--navy);font-weight:600">06 00 00 00 00</a></span></div>
+        <div class="contact-kv"><span class="ico">✉️</span><span>contact@frigelis.fr</span></div>
+        <div class="contact-kv"><span class="ico">📍</span><span>Arles &amp; région PACA</span></div>
+        <div class="contact-kv"><span class="ico">🕐</span><span>Lundi – Samedi : 8h – 18h</span></div>
+
+        <div class="contact-urgence">
+          <div class="contact-urgence-ico">⚡</div>
+          <div>
+            <div class="contact-urgence-title">Dépannage urgent ?</div>
+            <div class="contact-urgence-sub">Appelez directement — intervention sous 48h à Arles, Nîmes, Avignon et Salon.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form-card" data-fade data-delay="100">
+        <form id="contact-form" autocomplete="off">
+          <div class="form-grid-2" style="margin-bottom:1rem">
+            <div class="form-group"><label class="form-label">Nom *</label><input class="form-input" name="nom" placeholder="Jean Dupont" required></div>
+            <div class="form-group"><label class="form-label">Email *</label><input class="form-input" name="email" type="email" placeholder="jean@exemple.fr" required></div>
+          </div>
+          <div class="form-grid-2" style="margin-bottom:1rem">
+            <div class="form-group"><label class="form-label">Téléphone</label><input class="form-input" name="telephone" type="tel" placeholder="06 00 00 00 00"></div>
+            <div class="form-group"><label class="form-label">Service</label>
+              <select class="form-select" name="service">
+                <option value="">— Choisir —</option>
+                <option>Dépannage climatisation</option>
+                <option>Installation climatisation</option>
+                <option>Maintenance & Entretien</option>
+                <option>Autre</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group" style="margin-bottom:1.5rem">
+            <label class="form-label">Message *</label>
+            <textarea class="form-textarea" name="message" placeholder="Décrivez votre problème ou votre projet…" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;font-size:1.05rem" id="contact-submit">
+            Envoyer ma demande →
+          </button>
+        </form>
+        <div class="form-success" id="form-success">
+          ✅ Message envoyé ! Je vous recontacte sous 24h.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="assets/img/logo-horizontal.png" alt="Frigelis" onerror="this.style.display='none'">
+      <p>Dépannage &amp; maintenance de climatisation et systèmes frigorifiques.<br>Arles &amp; PACA.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <a href="#services">Dépannage clim</a>
+      <a href="#services">Installation clim</a>
+      <a href="#services">Entretien & nettoyage</a>
+      <a href="pages/services.html">Voir tout →</a>
+    </div>
+    <div class="footer-col">
+      <h4>Entreprise</h4>
+      <a href="#avis">Avis clients</a>
+      <a href="pages/faq.html">FAQ</a>
+      <a href="#zone">Zone d'intervention</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <div class="contact-line"><span class="ico">📞</span><a href="tel:+33600000000">06 00 00 00 00</a></div>
+      <div class="contact-line"><span class="ico">✉️</span>contact@frigelis.fr</div>
+      <div class="contact-line"><span class="ico">📍</span>Arles, PACA</div>
+      <a href="#contact-section" style="margin-top:.5rem" class="btn btn-primary btn-sm">Devis gratuit</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Frigelis — Dépannage &amp; Maintenance</span>
+    <div style="display:flex;gap:1.5rem">
+      <a href="pages/mentions-legales.html">Mentions légales</a>
+      <a href="pages/confidentialite.html">Confidentialité</a>
+
+    </div>
+  </div>
+</footer>
+
+<!-- FLOATING CTA -->
+<div class="float-cta">
+  <a href="tel:+33600000000" class="float-cta-btn">
+    <span class="float-cta-ico">📞</span> Appeler maintenant
+  </a>
+</div>
+
+<div id="toast"></div>
+
+<!-- GSAP + ScrollTrigger -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="./js/animations.js"></script>
+
+<!-- SUPABASE -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script type="module">
+import { db } from './js/storage.js';
+import { initNavbar, initFade, animCount, toast } from './js/app.js';
+
+initNavbar();
+initFade();
+
+/* ── COUNTERS ── */
+const cobs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    animCount(e.target, parseInt(e.target.dataset.target));
+    cobs.unobserve(e.target);
+  });
+}, {threshold:.6});
+document.querySelectorAll('[data-counter]').forEach(el => cobs.observe(el));
+
+/* ── SERVICES ── */
+const svcGrid = document.getElementById('svc-grid');
+const SERVICES = [
+  {
+    icone: '❄️',
+    title: 'Dépannage Climatisation',
+    seoTitle: 'Dépannage Réactif & Diagnostic',
+    description: 'Une panne au pire moment ? Un code erreur qui s\'affiche ? J\'interviens sous 48h à Arles et ses alentours pour diagnostiquer et réparer votre installation. Expert de toutes marques (Daikin, Mitsubishi, Atlantic).',
+    tags: ['Sous 48h', 'Toutes marques', 'Diagnostic offert'],
+    price: 'Sur devis',
+    calendly: 'https://calendly.com/frigelis-clim/entretien-annuel-climatisation',
+    btnLabel: 'Prendre RDV →',
+    active: true,
+  },
+  {
+    icone: '🔧',
+    title: 'Maintenance & Entretien',
+    seoTitle: 'Forfait Entretien & Santé',
+    description: 'Ne laissez pas les bactéries et la poussière s\'accumuler. Mon forfait complet inclut le nettoyage haute pression, la désinfection de l\'unité intérieure et la vérification des pressions de gaz.',
+    tags: ['À partir de 85€', 'Nettoyage HP', 'Vérif. fluide'],
+    price: 'Dès 85€',
+    calendly: 'https://calendly.com/frigelis-clim/maintenance-entretien-forfait',
+    btnLabel: 'Réserver mon entretien →',
+    active: true,
+  },
+  {
+    icone: '🏗️',
+    title: 'Installation Climatisation',
+    seoTitle: 'Installation & Mise en service',
+    description: 'Vous souhaitez équiper votre logement ? Profitez de 6 ans d\'expérience pour une pose aux normes et esthétique. Visite technique gratuite pour dimensionner précisément votre besoin (Mono-split, Multi-split ou Gainable).',
+    tags: ['Visite gratuite', 'Mono/Multi-split', 'Gainable'],
+    price: 'Visite offerte',
+    calendly: 'https://calendly.com/frigelis-clim/installation-visite-technique',
+    btnLabel: 'Planifier la visite →',
+    active: true,
+  },
+  {
+    icone: '🧊',
+    title: 'Froid Commercial',
+    seoTitle: 'Froid Commercial',
+    description: 'Vitrine réfrigérée, chambre froide, congélateur professionnel. Service disponible prochainement.',
+    tags: ['Restaurants', 'Commerces'],
+    price: '',
+    calendly: '',
+    btnLabel: '',
+    active: false,
+  },
+  {
+    icone: '♻️',
+    title: 'Pompe à chaleur',
+    seoTitle: 'Pompe à chaleur Air/Air · Air/Eau',
+    description: 'Installation et dépannage de pompes à chaleur. Service disponible prochainement.',
+    tags: ['Air/Air', 'Air/Eau'],
+    price: '',
+    calendly: '',
+    btnLabel: '',
+    active: false,
+  },
+  {
+    icone: '📋',
+    title: "Contrats d'entretien",
+    seoTitle: "Contrats d'entretien annuels",
+    description: 'Formule annuelle ou semestrielle avec visites préventives programmées et priorité d\'intervention. Disponible prochainement.',
+    tags: ['Annuel', 'Semestriel'],
+    price: '',
+    calendly: '',
+    btnLabel: '',
+    active: false,
+  },
+];
+
+svcGrid.innerHTML = SERVICES.map((s, i) => `
+  <div class="svc-card${s.active ? '' : ' coming-soon'}" style="animation:fadeUp .5s ${i*.08}s var(--ease) both">
+    ${!s.active ? '<span class="svc-soon-badge">Bientôt disponible</span>' : ''}
+    <div class="svc-ico-wrap">${s.icone}</div>
+    <h3 class="svc-name">${s.title}</h3>
+    <p class="svc-desc">${s.description}</p>
+    <div class="svc-tags">${s.tags.map(t => `<span class="svc-tag">${t}</span>`).join('')}</div>
+    ${s.active && s.price ? `<div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1rem;color:var(--blue);margin-bottom:.9rem">${s.price}</div>` : ''}
+    ${s.active && s.calendly ? `
+      <a href="${s.calendly}" target="_blank" rel="noopener" class="svc-link" style="background:var(--blue);color:white;border-color:var(--blue);padding:.6rem 1.1rem">📅 ${s.btnLabel}</a>
+      <p style="font-size:.7rem;color:var(--muted);margin-top:.55rem;display:flex;align-items:center;gap:.3rem">
+        <span style="color:var(--green);font-size:.8rem">✓</span> Confirmation immédiate &nbsp;·&nbsp; <span style="color:var(--green);font-size:.8rem">✓</span> Rappel 24h avant
+      </p>` : ''}
+  </div>
+`).join('');
+
+/* ── AVIS (static Google-style + link) ── */
+const avisGrid = document.getElementById('avis-grid');
+const staticAvis = [
+  {note:5, text:"Intervention rapide et efficace. Mon split était HS en plein été, réparé en 2h. Merci !", author:"Marie D.", meta:"Arles · 2024-07"},
+  {note:5, text:"Très professionnel, diagnostic clair et prix honnête. Je recommande vivement.", author:"Jean-Luc M.", meta:"Marseille · 2024-06"},
+  {note:4, text:"Bonne prestation, technicien ponctuel et sérieux. Légèrement au-dessus du tarif annoncé mais travail soigné.", author:"Sophie T.", meta:"Avignon · 2024-05"},
+];
+// Try Supabase first, fallback to static
+try {
+  const dbAvis = await db.getAvis(true);
+  const list = dbAvis.length ? dbAvis : staticAvis.map(a => ({note:a.note,commentaire:a.text,client_name:a.author,meta:a.meta}));
+  avisGrid.innerHTML = list.slice(0,3).map(a => `
+    <div class="avis-card">
+      <div class="avis-card-stars">${'★'.repeat(a.note||5)}${'☆'.repeat(5-(a.note||5))}</div>
+      <p class="avis-card-text">${a.commentaire||a.text}</p>
+      <div class="avis-card-footer">
+        <div>
+          <div class="avis-author">${a.client_name||a.author}</div>
+          <div class="avis-meta">${a.meta||''}</div>
+        </div>
+        <svg width="20" height="20" viewBox="0 0 24 24" style="flex-shrink:0"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+      </div>
+    </div>
+  `).join('');
+} catch {
+  avisGrid.innerHTML = staticAvis.map(a=>`
+    <div class="avis-card">
+      <div class="avis-card-stars">${'★'.repeat(a.note)}${'☆'.repeat(5-a.note)}</div>
+      <p class="avis-card-text">${a.text}</p>
+      <div class="avis-card-footer">
+        <div><div class="avis-author">${a.author}</div><div class="avis-meta">${a.meta}</div></div>
+      </div>
+    </div>`).join('');
+}
+
+/* ── ZONE CHECK ── */
+const ZONES = ['arles','nîmes','nimes','avignon','salon','tarascon','saint-martin','beaucaire','istres','martigues','saint-gilles','lunel','aigues','crau','gard','bouches','vaucluse','hérault','herault','paca','camargue','fontvieille','maussane','mouriès','baux','saintes-maries'];
+window.checkZone = () => {
+  const v = document.getElementById('zone-input').value.toLowerCase().trim();
+  const r = document.getElementById('zone-result');
+  if (!v) { r.textContent=''; return; }
+  const ok = ZONES.some(z => v.includes(z) || z.includes(v));
+  r.innerHTML = ok
+    ? `<span style="color:var(--green)">✓ Je couvre votre zone !</span> <a href="#contact-section" style="color:var(--cyan);font-weight:600;margin-left:.5rem">→ Demander un devis</a>`
+    : `<span style="color:rgba(255,255,255,.5)">Zone hors périmètre habituel — <a href="#contact-section" style="color:var(--cyan)">contactez-moi</a> quand même.</span>`;
+};
+document.getElementById('zone-input')?.addEventListener('keydown', e => { if(e.key==='Enter') window.checkZone(); });
+
+/* ── CONTACT FORM ── */
+document.getElementById('contact-form')?.addEventListener('submit', async e => {
+  e.preventDefault();
+  const f = e.target;
+  const btn = document.getElementById('contact-submit');
+  btn.textContent='Envoi en cours…'; btn.disabled=true;
+  try {
+    await db.insertContact({
+      nom: f.nom.value.trim(), email: f.email.value.trim(),
+      telephone: f.telephone?.value.trim()||'',
+      service: f.service?.value||'',
+      message: f.message.value.trim(),
+      status:'nouveau', created_at: new Date().toISOString(),
+    });
+    f.reset();
+    document.getElementById('form-success').style.display='flex';
+    toast('✅ Message envoyé !','success');
+  } catch {
+    toast('Erreur d\'envoi. Appelez directement.','error');
+  } finally {
+    btn.textContent='Envoyer ma demande →'; btn.disabled=false;
+  }
+});
+</script>
+</body>
+</html>
