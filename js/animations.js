@@ -1,316 +1,327 @@
 /**
- * Frigelis — Animations GSAP + ScrollTrigger
- * Stratégie : performance first, scroll-driven, mobile-safe
+ * Frigelis — Animations v2 — Cinématique
+ * Text splitting · Clip reveals · Stagger dramatique
  */
 
-// ── PREFERSREDUCEDMOTION guard ──────────────────────────────
-const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-if (prefersReduced) { console.log('[Frigelis] Animations désactivées (prefers-reduced-motion)'); }
-
-// ── REGISTER ───────────────────────────────────────────────
 gsap.registerPlugin(ScrollTrigger);
 
-// ── HELPERS ────────────────────────────────────────────────
-const ease = 'power3.out';
-const easeBack = 'back.out(1.4)';
+const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const touch   = window.matchMedia('(pointer: coarse)').matches;
 
-function fromBelow(el, opts = {}) {
-  return gsap.from(el, { y: 48, opacity: 0, duration: 0.75, ease, ...opts });
-}
-
-// ── 1. HERO ─────────────────────────────────────────────────
+/* ─────────────────────────────────────────────────
+   1. HERO — INTRO CINÉMATIQUE
+───────────────────────────────────────────────── */
 function animHero() {
-  if (prefersReduced) return;
+  if (reduced) {
+    gsap.set(['.hero-eyebrow','.hero-h1','.hero-lead','.hero-actions','.hero-trust','.hero-feat-card'], { opacity: 1 });
+    return;
+  }
 
-  const tl = gsap.timeline({ defaults: { ease, duration: 0.7 } });
+  const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
 
-  // Eyebrow pill
-  tl.from('.hero-eyebrow', { y: 20, opacity: 0, duration: 0.55 })
+  tl.from('.hero-eyebrow', {
+    x: -32, opacity: 0, scale: 0.88, duration: 0.65,
+  })
 
-  // H1 — chaque ligne
-  .from('.hero-h1', { y: 36, opacity: 0, duration: 0.7 }, '-=0.3')
+  .add(() => {
+    const h1 = document.querySelector('.hero-h1');
+    if (!h1) return;
+    const lines = [];
+    Array.from(h1.childNodes).forEach(node => {
+      if (node.nodeType === 3 && node.textContent.trim()) {
+        const wrap = document.createElement('span');
+        wrap.style.cssText = 'display:block;overflow:hidden;line-height:1.05';
+        const inner = document.createElement('span');
+        inner.style.cssText = 'display:block';
+        inner.textContent = node.textContent;
+        wrap.appendChild(inner);
+        h1.replaceChild(wrap, node);
+        lines.push(inner);
+      } else if (node.nodeName === 'SPAN' || node.nodeName === 'BR') {
+        if (node.nodeName === 'BR') return;
+        const wrap = document.createElement('span');
+        wrap.style.cssText = 'display:block;overflow:hidden;line-height:1.05';
+        const inner = node.cloneNode(true);
+        inner.style.display = 'block';
+        wrap.appendChild(inner);
+        h1.replaceChild(wrap, node);
+        lines.push(inner);
+      }
+    });
+    if (lines.length) {
+      gsap.from(lines, { y: '110%', duration: 0.9, stagger: 0.13, ease: 'power4.out' });
+    }
+  }, '-=0.3')
 
-  // Sous-titre
-  .from('.hero-left h2', { y: 24, opacity: 0, duration: 0.6 }, '-=0.45')
+  .from('.hero-left h2', { y: 24, opacity: 0, duration: 0.6 }, '-=0.5')
+  .from('.hero-lead',    { y: 20, opacity: 0, duration: 0.6 }, '-=0.45')
 
-  // Lead
-  .from('.hero-lead', { y: 20, opacity: 0, duration: 0.6 }, '-=0.45')
+  .from('#hero .hero-left > div[style*="ecfdf5"]', {
+    scaleX: 0, transformOrigin: 'left center', opacity: 0,
+    duration: 0.55, ease: 'back.out(1.6)',
+  }, '-=0.35')
 
-  // Badge dispo
-  .from('#hero .hero-left > div[style*="ecfdf5"]', { scale: 0.9, opacity: 0, duration: 0.5, ease: easeBack }, '-=0.35')
+  .from('.hero-actions .btn', {
+    y: 20, opacity: 0, stagger: 0.1, duration: 0.55, ease: 'back.out(1.4)',
+  }, '-=0.3')
 
-  // CTA buttons
-  .from('.hero-actions .btn', { y: 16, opacity: 0, stagger: 0.1, duration: 0.5, ease: easeBack }, '-=0.3')
+  .from('.hero-left > p[style*="0.75rem"]', { opacity: 0, duration: 0.4 }, '-=0.2')
+  .from('.hero-trust', { y: 16, opacity: 0, duration: 0.5 }, '-=0.2')
 
-  // Trust bar
-  .from('.hero-trust', { y: 16, opacity: 0, duration: 0.5 }, '-=0.25')
-
-  // Feature cards (right column) — slide depuis la droite
   .from('.hero-feat-card', {
-    x: 60,
-    opacity: 0,
-    stagger: 0.12,
-    duration: 0.65,
-    ease: easeBack,
-    clearProps: 'all',
-  }, '-=0.5');
+    x: 90, opacity: 0, rotateY: 10,
+    stagger: 0.1, duration: 0.75,
+    ease: 'back.out(1.3)', clearProps: 'all',
+  }, '-=0.55');
 }
 
-// ── 2. STATS RIBBON — compteurs + fade ──────────────────────
+/* ─────────────────────────────────────────────────
+   2. STATS
+───────────────────────────────────────────────── */
 function animStats() {
-  if (prefersReduced) return;
-
+  if (reduced) return;
   gsap.from('.stat-item', {
-    scrollTrigger: { trigger: '#stats', start: 'top 80%', once: true },
-    y: 30,
-    opacity: 0,
-    stagger: 0.1,
-    duration: 0.65,
-    ease,
+    scrollTrigger: { trigger: '#stats', start: 'top 82%', once: true },
+    y: 40, opacity: 0, stagger: 0.1, duration: 0.7, ease: 'back.out(1.4)',
+  });
+  ScrollTrigger.create({
+    trigger: '#stats', start: 'top 80%', once: true,
+    onEnter: () => setTimeout(() => {
+      gsap.fromTo('.stat-n', { color: '#38bdf8' }, {
+        color: '#ffffff', duration: 1.2, stagger: 0.1, ease: 'power2.inOut',
+      });
+    }, 1400),
   });
 }
 
-// ── 3. SECTIONS GÉNÉRIQUES — data-fade override ─────────────
-// On remplace le système CSS IntersectionObserver par GSAP
-// pour des timings plus précis
-function animSections() {
-  if (prefersReduced) return;
-
-  // Section headers
-  document.querySelectorAll('.sec-header').forEach(el => {
+/* ─────────────────────────────────────────────────
+   3. SECTION HEADERS — clip wipe
+───────────────────────────────────────────────── */
+function animHeaders() {
+  if (reduced) return;
+  document.querySelectorAll('.sec-h').forEach(el => {
     gsap.from(el, {
-      scrollTrigger: { trigger: el, start: 'top 85%', once: true },
-      y: 40, opacity: 0, duration: 0.7, ease,
+      scrollTrigger: { trigger: el, start: 'top 88%', once: true },
+      clipPath: 'inset(0% 100% 0% 0%)',
+      duration: 0.9, ease: 'power4.inOut',
+    });
+  });
+  document.querySelectorAll('.sec-tag').forEach(el => {
+    gsap.from(el, {
+      scrollTrigger: { trigger: el, start: 'top 90%', once: true },
+      x: -30, opacity: 0, duration: 0.55, ease: 'power3.out',
+    });
+  });
+  document.querySelectorAll('.sec-sub').forEach(el => {
+    gsap.from(el, {
+      scrollTrigger: { trigger: el, start: 'top 90%', once: true },
+      y: 20, opacity: 0, duration: 0.6, ease: 'power3.out', delay: 0.1,
     });
   });
 }
 
-// ── 4. SERVICE CARDS — stagger depuis le bas ────────────────
+/* ─────────────────────────────────────────────────
+   4. SERVICE CARDS
+───────────────────────────────────────────────── */
 function animServiceCards() {
-  if (prefersReduced) return;
-
-  // MutationObserver: les cards sont injectées dynamiquement par le JS
-  const observer = new MutationObserver(() => {
+  if (reduced) return;
+  const obs = new MutationObserver(() => {
     const cards = document.querySelectorAll('.svc-card');
     if (!cards.length) return;
-    observer.disconnect();
-
-    // Annuler l'animation inline fadeUp du HTML pour éviter le conflit
+    obs.disconnect();
     cards.forEach(c => c.style.animation = 'none');
-
     gsap.from(cards, {
-      scrollTrigger: { trigger: '#svc-grid', start: 'top 80%', once: true },
-      y: 50,
-      opacity: 0,
-      stagger: 0.1,
-      duration: 0.65,
-      ease,
-      clearProps: 'all',
+      scrollTrigger: { trigger: '#svc-grid', start: 'top 82%', once: true },
+      y: 60, opacity: 0, stagger: 0.1, duration: 0.7,
+      ease: 'power3.out', clearProps: 'all',
     });
   });
   const grid = document.getElementById('svc-grid');
-  if (grid) observer.observe(grid, { childList: true });
+  if (grid) obs.observe(grid, { childList: true });
 }
 
-// ── 5. SYMPTOM CARDS ─────────────────────────────────────────
+/* ─────────────────────────────────────────────────
+   5. SYMPTOM CARDS — alternance gauche/droite
+───────────────────────────────────────────────── */
 function animSymptomCards() {
-  if (prefersReduced) return;
-
-  gsap.from('.symptom-card', {
-    scrollTrigger: { trigger: '#symptom-grid', start: 'top 80%', once: true },
-    y: 40,
-    opacity: 0,
-    stagger: 0.09,
-    duration: 0.6,
-    ease: easeBack,
-    clearProps: 'all',
+  if (reduced) return;
+  document.querySelectorAll('.symptom-card').forEach((card, i) => {
+    gsap.from(card, {
+      scrollTrigger: { trigger: card, start: 'top 88%', once: true },
+      x: i % 2 === 0 ? -50 : 50, opacity: 0,
+      duration: 0.65, ease: 'power3.out', clearProps: 'all',
+    });
   });
 }
 
-// ── 6. AVANT/APRÈS REVEAL ────────────────────────────────────
+/* ─────────────────────────────────────────────────
+   6. AVANT / APRÈS
+───────────────────────────────────────────────── */
 function animAvantApres() {
-  if (prefersReduced) return;
-
-  const section = document.querySelector('#hero ~ * ~ * ~ * ~ * ~ * section');
-  // Sélection plus sûre par contenu
-  const avantApresSection = Array.from(document.querySelectorAll('section')).find(
-    s => s.querySelector('.sec-tag-light')?.textContent?.includes('Hygiène')
+  if (reduced) return;
+  const section = Array.from(document.querySelectorAll('section')).find(
+    s => s.querySelector('[style*="AVANT"]')
   );
-
-  if (!avantApresSection) return;
-
-  const [leftCol, rightCol] = avantApresSection.querySelectorAll(':scope .container > div > div');
-
-  if (leftCol) {
-    gsap.from(leftCol, {
-      scrollTrigger: { trigger: avantApresSection, start: 'top 75%', once: true },
-      x: -50, opacity: 0, duration: 0.8, ease,
+  if (!section) return;
+  const cols = section.querySelectorAll(':scope .container > div > div');
+  if (cols[0]) gsap.from(cols[0], {
+    scrollTrigger: { trigger: section, start: 'top 75%', once: true },
+    x: -60, opacity: 0, duration: 0.85, ease: 'power4.out',
+  });
+  if (cols[1]) {
+    gsap.from(cols[1], {
+      scrollTrigger: { trigger: section, start: 'top 75%', once: true },
+      x: 60, opacity: 0, duration: 0.85, ease: 'power4.out', delay: 0.15,
     });
-  }
-  if (rightCol) {
-    gsap.from(rightCol, {
-      scrollTrigger: { trigger: avantApresSection, start: 'top 75%', once: true },
-      x: 50, opacity: 0, duration: 0.8, ease, delay: 0.15,
+    const badge = cols[1].querySelector('div[style*="position:absolute"]');
+    if (badge) gsap.from(badge, {
+      scrollTrigger: { trigger: section, start: 'top 68%', once: true },
+      scale: 0, rotation: -15, opacity: 0,
+      duration: 0.6, ease: 'back.out(2)', delay: 0.4,
     });
-
-    // Badge prix — pop
-    const badge = rightCol.querySelector('div[style*="position:absolute"]');
-    if (badge) {
-      gsap.from(badge, {
-        scrollTrigger: { trigger: avantApresSection, start: 'top 70%', once: true },
-        scale: 0, opacity: 0, duration: 0.55, ease: easeBack, delay: 0.5,
-      });
-    }
   }
 }
 
-// ── 7. PROCESS STEPS — cascade depuis le bas ────────────────
+/* ─────────────────────────────────────────────────
+   7. PROCESS STEPS
+───────────────────────────────────────────────── */
 function animProcess() {
-  if (prefersReduced) return;
-
+  if (reduced) return;
   gsap.from('.process-step', {
-    scrollTrigger: { trigger: '#process', start: 'top 78%', once: true },
-    y: 55,
-    opacity: 0,
-    stagger: 0.13,
-    duration: 0.7,
-    ease: easeBack,
-    clearProps: 'all',
+    scrollTrigger: { trigger: '.process-grid', start: 'top 80%', once: true },
+    y: 70, opacity: 0, stagger: 0.15, duration: 0.75,
+    ease: 'power4.out', clearProps: 'all',
+  });
+  gsap.from('.step-num', {
+    scrollTrigger: { trigger: '.process-grid', start: 'top 78%', once: true },
+    scale: 0, opacity: 0, stagger: 0.15, duration: 0.6,
+    ease: 'back.out(2)', delay: 0.2,
   });
 }
 
-// ── 8. AVIS CARDS ────────────────────────────────────────────
+/* ─────────────────────────────────────────────────
+   8. AVIS CARDS
+───────────────────────────────────────────────── */
 function animAvisCards() {
-  if (prefersReduced) return;
-
-  const observer = new MutationObserver(() => {
+  if (reduced) return;
+  const obs = new MutationObserver(() => {
     const cards = document.querySelectorAll('.avis-card');
     if (!cards.length) return;
-    observer.disconnect();
-
+    obs.disconnect();
     gsap.from(cards, {
-      scrollTrigger: { trigger: '#avis-grid', start: 'top 82%', once: true },
-      y: 40,
-      opacity: 0,
-      stagger: 0.12,
-      duration: 0.65,
-      ease,
-      clearProps: 'all',
+      scrollTrigger: { trigger: '#avis-grid', start: 'top 84%', once: true },
+      y: 50, opacity: 0, stagger: 0.13, duration: 0.7,
+      ease: 'power3.out', clearProps: 'all',
     });
   });
   const grid = document.getElementById('avis-grid');
-  if (grid) observer.observe(grid, { childList: true });
+  if (grid) obs.observe(grid, { childList: true });
 }
 
-// ── 9. ZONE CARDS — villes ───────────────────────────────────
+/* ─────────────────────────────────────────────────
+   9. ZONE — villes pop depuis le centre
+───────────────────────────────────────────────── */
 function animZone() {
-  if (prefersReduced) return;
-
+  if (reduced) return;
   gsap.from('.zone-city', {
+    scrollTrigger: { trigger: '.zone-cities', start: 'top 84%', once: true },
+    scale: 0, opacity: 0,
+    stagger: { each: 0.04, from: 'center' },
+    duration: 0.4, ease: 'back.out(1.7)', clearProps: 'all',
+  });
+  gsap.from('#zone .zone-left > div[style*="flex-direction"]', {
     scrollTrigger: { trigger: '#zone', start: 'top 78%', once: true },
-    scale: 0.7,
-    opacity: 0,
-    stagger: 0.05,
-    duration: 0.45,
-    ease: easeBack,
-    clearProps: 'all',
+    x: -40, opacity: 0, stagger: 0.1, duration: 0.55, ease: 'power3.out',
   });
 }
 
-// ── 10. CONTACT SECTION ──────────────────────────────────────
+/* ─────────────────────────────────────────────────
+   10. CONTACT
+───────────────────────────────────────────────── */
 function animContact() {
-  if (prefersReduced) return;
-
-  const layout = document.querySelector('.contact-layout');
-  if (!layout) return;
-  const [left, right] = layout.children;
-
-  if (left) {
-    gsap.from(left, {
-      scrollTrigger: { trigger: '#contact-section', start: 'top 78%', once: true },
-      x: -40, opacity: 0, duration: 0.75, ease,
-    });
-  }
-  if (right) {
-    gsap.from(right, {
-      scrollTrigger: { trigger: '#contact-section', start: 'top 78%', once: true },
-      y: 40, opacity: 0, duration: 0.75, ease, delay: 0.15,
-    });
-  }
+  if (reduced) return;
+  const left  = document.querySelector('.contact-layout > *:first-child');
+  const right = document.querySelector('.contact-layout > *:last-child');
+  if (left)  gsap.from(left,  { scrollTrigger: { trigger: '#contact-section', start: 'top 78%', once: true }, x: -50, opacity: 0, duration: 0.8, ease: 'power4.out' });
+  if (right) gsap.from(right, { scrollTrigger: { trigger: '#contact-section', start: 'top 78%', once: true }, y: 50,  opacity: 0, duration: 0.8, ease: 'power4.out', delay: 0.18 });
 }
 
-// ── 11. NAVBAR SCROLL PARALLAX ──────────────────────────────
-function animNavParallax() {
-  if (prefersReduced) return;
-
-  // Légère élévation box-shadow sur scroll (complète initNavbar)
-  // déjà géré par .navbar.scrolled en CSS, rien à ajouter
+/* ─────────────────────────────────────────────────
+   11. TOPBAR + NAVBAR
+───────────────────────────────────────────────── */
+function animNav() {
+  if (reduced) return;
+  gsap.from('.topbar', { y: -100, duration: 0.7,  ease: 'power4.out' });
+  gsap.from('.navbar',  { y: -40, opacity: 0, duration: 0.55, ease: 'power3.out', delay: 0.2 });
 }
 
-// ── 12. HOVER MAGNÉTIQUE sur les BTN PRIMAIRES ───────────────
-function magneticButtons() {
-  if (prefersReduced) return;
-  if (window.matchMedia('(pointer: coarse)').matches) return; // pas sur touch
-
-  document.querySelectorAll('.btn-primary, .nav-cta').forEach(btn => {
-    btn.addEventListener('mousemove', e => {
-      const r = btn.getBoundingClientRect();
-      const x = (e.clientX - r.left - r.width / 2) * 0.25;
-      const y = (e.clientY - r.top - r.height / 2) * 0.25;
-      gsap.to(btn, { x, y, duration: 0.3, ease: 'power2.out' });
-    });
-    btn.addEventListener('mouseleave', () => {
-      gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: easeBack });
-    });
-  });
-}
-
-// ── 13. HIGHLIGHT COUNTER AU SCROLL ─────────────────────────
-function animStatNumbers() {
-  // Les compteurs natifs sont déjà gérés par animCount() dans index.html
-  // On ajoute juste un flash couleur quand ils terminent
-  if (prefersReduced) return;
-
-  ScrollTrigger.create({
-    trigger: '#stats',
-    start: 'top 80%',
-    once: true,
-    onEnter: () => {
-      setTimeout(() => {
-        gsap.from('.stat-n', {
-          color: 'var(--cyan)',
-          duration: 1.5,
-          stagger: 0.12,
-          ease: 'power2.inOut',
-        });
-      }, 1200); // après que les compteurs aient fini
-    },
-  });
-}
-
-// ── 14. FLOATING CTA — apparition différée ──────────────────
+/* ─────────────────────────────────────────────────
+   12. FLOATING CTA
+───────────────────────────────────────────────── */
 function animFloatCta() {
-  if (prefersReduced) return;
-
+  if (reduced) return;
   const btn = document.querySelector('.float-cta');
   if (!btn) return;
-  gsap.from(btn, { y: 80, opacity: 0, duration: 0.7, ease: easeBack, delay: 1.5 });
+  gsap.from(btn, { y: 100, opacity: 0, duration: 0.7, ease: 'back.out(1.4)', delay: 1.8 });
 }
 
-// ── 15. TOPBAR SLIDE DOWN ────────────────────────────────────
-function animTopbar() {
-  if (prefersReduced) return;
-  gsap.from('.topbar', { y: -40, opacity: 0, duration: 0.6, ease });
-  gsap.from('.navbar', { y: -20, opacity: 0, duration: 0.5, ease, delay: 0.15 });
+/* ─────────────────────────────────────────────────
+   13. PARALLAX HERO (desktop)
+───────────────────────────────────────────────── */
+function animHeroParallax() {
+  if (reduced || touch) return;
+  gsap.to('.hero-right', {
+    scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: 1.5 },
+    y: -80, ease: 'none',
+  });
+  gsap.to('.hero-left', {
+    scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: 2 },
+    y: -40, ease: 'none',
+  });
 }
 
-// ── INIT ────────────────────────────────────────────────────
+/* ─────────────────────────────────────────────────
+   14. SCROLL PROGRESS BAR
+───────────────────────────────────────────────── */
+function scrollProgress() {
+  if (reduced) return;
+  const bar = document.createElement('div');
+  bar.id = 'scroll-progress';
+  bar.style.cssText = 'position:fixed;top:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,#2563eb,#38bdf8);z-index:9999;pointer-events:none;box-shadow:0 0 8px rgba(56,189,248,.6);';
+  document.body.prepend(bar);
+  gsap.to(bar, {
+    width: '100%', ease: 'none',
+    scrollTrigger: { trigger: document.body, start: 'top top', end: 'bottom bottom', scrub: 0.3 },
+  });
+}
+
+/* ─────────────────────────────────────────────────
+   15. HOVER MAGNÉTIQUE
+───────────────────────────────────────────────── */
+function magneticButtons() {
+  if (reduced || touch) return;
+  document.querySelectorAll('.btn-primary, .nav-cta, .btn-white').forEach(btn => {
+    btn.addEventListener('mousemove', e => {
+      const r = btn.getBoundingClientRect();
+      const x = (e.clientX - r.left - r.width  / 2) * 0.22;
+      const y = (e.clientY - r.top  - r.height / 2) * 0.22;
+      gsap.to(btn, { x, y, duration: 0.35, ease: 'power2.out', overwrite: true });
+    });
+    btn.addEventListener('mouseleave', () => {
+      gsap.to(btn, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.4)', overwrite: true });
+    });
+  });
+}
+
+/* ─────────────────────────────────────────────────
+   INIT
+───────────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
-  animTopbar();
+  scrollProgress();
+  animNav();
   animHero();
   animStats();
-  animStatNumbers();
-  animSections();
+  animHeaders();
   animServiceCards();
   animSymptomCards();
   animAvantApres();
@@ -320,4 +331,5 @@ document.addEventListener('DOMContentLoaded', () => {
   animContact();
   magneticButtons();
   animFloatCta();
+  animHeroParallax();
 });
